@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SunSync Off-Grid - Simulasi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="icon" type="image/png" href="/assets/solar-energy.png" />
+    <meta name="view-transition" content="same-origin" />
+  </head>
+  <body class="dark-theme">
+    <!-- Transparent Top Navbar -->
+    <nav class="glass-navbar">
+      <div class="nav-brand">
+        <img
+          src="/assets/solar-energy.png"
+          alt="Logo PLTS"
+          class="icon-brand"
+        />
+        <span class="brand-text">SunSync Off-Grid</span>
+      </div>
+
+      <div class="nav-links">
+        <a href="/index.html" class="nav-link">Home</a>
+        <a href="/about.html" class="nav-link">About</a>
+      </div>
+    </nav>
+
+    <div class="dashboard-container">
+      <!-- Left Panel: Controls & Parameters -->
+      <aside class="dashboard-panel panel-left glass-panel">
+        <div class="panel-header">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-cyan"
+          >
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+            />
+          </svg>
+          <h3>Kontrol & Parameter</h3>
+        </div>
+
+        <!-- Waktu & Cuaca Section -->
+        <div class="panel-section">
+          <h4 class="section-title text-cyan">Waktu & Cuaca</h4>
+          <div class="form-group">
+            <button
+              id="btn-toggle-pause"
+              class="btn btn-primary btn-glow"
+              style="width: 100%; margin-bottom: 0.8rem"
+            >
+              Pause Simulasi
+            </button>
+          </div>
+          <div class="form-group">
+            <label for="input-time"
+              >Waktu:
+              <span id="label-time-val" class="highlight-text"
+                >06:00</span
+              ></label
+            >
+            <input
+              type="range"
+              id="input-time"
+              class="form-range"
+              min="0"
+              max="23.99"
+              step="0.1"
+              value="6"
+            />
+          </div>
+          <div class="form-group">
+            <label for="input-env-temp"
+              >Suhu Lingkungan (°C):
+              <span id="label-temp-val" class="highlight-text">30</span></label
+            >
+            <input
+              type="range"
+              id="input-env-temp"
+              class="form-range range-coral"
+              min="15"
+              max="45"
+              step="1"
+              value="30"
+            />
+          </div>
+        </div>
+
+        <!-- Spesifikasi Sistem PLTS & Baterai -->
+        <div class="panel-section">
+          <h4 class="section-title text-emerald">Spesifikasi Sistem</h4>
+          
+          <div class="form-group">
+            <label for="input-month">Bulan (Dataset GHI NASA):</label>
+            <select id="input-month" class="form-input" style="background: #111827; color: #fff; border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; padding: 0.4rem; width: 100%;">
+              <option value="1">Januari (4.37 GHI)</option>
+              <option value="2">Februari (4.31 GHI)</option>
+              <option value="3">Maret (4.64 GHI)</option>
+              <option value="4">April (4.80 GHI)</option>
+              <option value="5">Mei (4.42 GHI)</option>
+              <option value="6">Juni (4.17 GHI)</option>
+              <option value="7">Juli (4.56 GHI)</option>
+              <option value="8">Agustus (4.99 GHI)</option>
+              <option value="9" selected>September (5.27 GHI)</option>
+              <option value="10">Oktober (5.19 GHI)</option>
+              <option value="11">November (4.54 GHI)</option>
+              <option value="12">Desember (4.46 GHI)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="input-pv-wp">Kapasitas PV Array (Wp):</label>
+            <input
+              type="number"
+              id="input-pv-wp"
+              class="form-input"
+              value="2000"
+              step="100"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="input-pv-eff">Efisiensi PV Array (%):</label>
+            <input
+              type="number"
+              id="input-pv-eff"
+              class="form-input"
+              value="18"
+              step="1"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="input-battery-kwh">Kapasitas Baterai (kWh):</label>
+            <input
+              type="number"
+              id="input-battery-kwh"
+              class="form-input"
+              value="10"
+              step="0.5"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="input-battery-voltage">Tegangan Baterai (V):</label>
+            <input
+              type="number"
+              id="input-battery-voltage"
+              class="form-input"
+              value="48"
+              step="12"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="input-battery-dod">Batas Bawah DoD Baterai (%):</label>
+            <input
+              type="number"
+              id="input-battery-dod"
+              class="form-input"
+              value="30"
+              step="5"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="input-inverter-eff">Efisiensi Inverter (%):</label>
+            <input
+              type="number"
+              id="input-inverter-eff"
+              class="form-input"
+              value="92"
+              step="1"
+            />
+          </div>
+        </div>
+
+        <!-- Beban Listrik Section -->
+        <div class="panel-section">
+          <h4 class="section-title text-indigo">Beban Rumah Tangga</h4>
+          <div class="form-group load-toggles">
+            <div class="toggle-row" style="margin-bottom: 0.8rem; border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 0.8rem;">
+              <span><strong>Beban Konstan 300 W</strong></span>
+              <label class="switch">
+                <input type="checkbox" id="toggle-beban-konstan" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="icon"
+                >
+                  <path d="M12 2v2" />
+                  <path d="M2 12h2" />
+                  <path d="M20 12h2" />
+                  <path d="M12 20v2" />
+                  <circle cx="12" cy="12" r="4" />
+                </svg>
+                Lampu LED (20 W)</span
+              >
+              <label class="switch">
+                <input type="checkbox" id="toggle-lampu" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="icon"
+                >
+                  <path d="M12 2v10" />
+                  <path d="M18 12a6 6 0 0 1-6 6 6 6 0 0 1-6-6" />
+                </svg>
+                Kipas Angin (50 W)</span
+              >
+              <label class="switch">
+                <input type="checkbox" id="toggle-kipas" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="icon"
+                >
+                  <rect width="20" height="15" x="2" y="7" rx="2" ry="2" />
+                  <polyline points="17 2 12 7 7 2" />
+                </svg>
+                TV LED (80 W)</span
+              >
+              <label class="switch">
+                <input type="checkbox" id="toggle-tv" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="icon"
+                >
+                  <rect width="10" height="20" x="7" y="2" rx="2" />
+                  <path d="M7 10h10" />
+                </svg>
+                Kulkas (120 W)</span
+              >
+              <label class="switch">
+                <input type="checkbox" id="toggle-kulkas" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="icon"
+                >
+                  <path
+                    d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"
+                  />
+                </svg>
+                Pompa Air (250 W)</span
+              >
+              <label class="switch">
+                <input type="checkbox" id="toggle-pompa" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="icon"
+                >
+                  <path d="M12 2v2" />
+                  <rect width="16" height="12" x="4" y="8" rx="2" />
+                  <path d="M2 14h2" />
+                  <path d="M20 14h2" />
+                </svg>
+                Rice Cooker (350 W)</span
+              >
+              <label class="switch">
+                <input type="checkbox" id="toggle-ricecooker" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <input type="hidden" id="input-consumption" value="50" />
+
+          <div class="status-box">
+            <p>
+              Total Beban:
+              <strong id="val-beban-total" class="text-coral">0 W</strong>
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center Panel: 3D Visualization Viewport -->
+      <main class="dashboard-viewport">
+        <div class="viewport-header">
+          <span class="viewport-title">Visualisasi 3D PLTS Off-Grid</span>
+          <div class="viewport-status">
+            <span class="status-dot pulsing"></span> Live View
+          </div>
+        </div>
+        <div class="canvas-wrapper-dashboard">
+          <div id="simulation-canvas" class="canvas-container-dashboard">
+            <!-- Real-Time HUD Overlay -->
+            <div class="hud-overlay scifi-hud">
+              <div class="hud-header">STATUS TELEMETRY</div>
+              <div class="hud-item">
+                <span class="hud-label">TIME</span>
+                <span id="hud-time" class="hud-val text-cyan">06:00</span>
+              </div>
+              <div class="hud-item">
+                <span class="hud-label">PV PWR</span>
+                <span id="hud-pv-power" class="hud-val text-emerald">0 W</span>
+              </div>
+              <div class="hud-item">
+                <span class="hud-label">CELL TMP</span>
+                <span id="hud-cell-temp" class="hud-val text-amber"
+                  >30.0 °C</span
+                >
+              </div>
+              <div class="hud-item">
+                <span class="hud-label">LOAD</span>
+                <span id="hud-load" class="hud-val text-coral">0 W</span>
+              </div>
+              <div class="hud-item">
+                <span class="hud-label">BATT SOC</span>
+                <span id="hud-soc" class="hud-val text-indigo">80.0 %</span>
+              </div>
+              <div class="hud-item status-row">
+                <span class="hud-label">STATE</span>
+                <span id="hud-status" class="hud-status-badge standby"
+                  >STANDBY</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Right Panel: Analytics & Real-Time Data -->
+      <aside class="dashboard-panel panel-right glass-panel">
+        <div class="panel-header">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-emerald"
+          >
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+          <h3>Analisis Data</h3>
+        </div>
+
+        <div class="panel-section chart-section">
+          <h4 class="text-cyan">Produksi vs Konsumsi</h4>
+          <div class="canvas-wrapper">
+            <canvas id="energyChart"></canvas>
+          </div>
+        </div>
+
+        <div class="panel-section chart-section">
+          <h4 class="text-indigo">State of Charge Baterai</h4>
+          <div class="canvas-wrapper">
+            <canvas id="socChart"></canvas>
+          </div>
+        </div>
+
+        <div class="panel-section actions-section">
+          <button
+            id="btn-export-csv"
+            class="btn btn-outline btn-outline-cyan"
+            style="width: 100%"
+          >
+            Eksport CSV
+          </button>
+          <p
+            class="text-center text-muted"
+            style="font-size: 0.75rem; margin-top: 1rem; opacity: 0.6"
+          >
+            &copy; 2026 By Kelompok 7. All rights reserved.
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
