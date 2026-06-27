@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader.js";
+import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader.js";
 import {SimulationResults} from "../core/EnergyCalculator";
 
 interface ElectricParticle {
@@ -112,6 +113,13 @@ export class SceneManager {
   private async loadModels() {
     const loader = new GLTFLoader();
 
+    // Konfigurasi DRACOLoader untuk mendukung model terkompresi
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath(
+      "https://www.gstatic.com/draco/versioned/decoders/1.5.6/",
+    );
+    loader.setDRACOLoader(dracoLoader);
+
     try {
       // Sky
       loader.load("/assets/Cloud/skybox_skydays_3.glb", (gltf) => {
@@ -120,9 +128,9 @@ export class SceneManager {
         this.scene.add(this.skyMesh);
       });
 
-      // Land
+      // Land (Menggunakan optimized.glb berukuran 11.2 MB, bukan 120 MB)
       const landGltf = await loader.loadAsync(
-        "/assets/Land/750_railroad_ave_shelbyville_tn_real_estate.glb",
+        "/assets/Land/compressed_test.glb",
       );
       const land = landGltf.scene;
       land.position.set(0, 0, 0);
@@ -239,7 +247,11 @@ export class SceneManager {
       // Light for Gray House
       // Posisikan di luar rumah sedikit agar cahayanya menyinari dinding luar
       this.house2Light = new THREE.PointLight(0xffcc55, 0, 150);
-      this.house2Light.position.set(house2X + 12, house2GroundY + 8, house2Z + 12);
+      this.house2Light.position.set(
+        house2X + 12,
+        house2GroundY + 8,
+        house2Z + 12,
+      );
       this.house2Light.castShadow = true;
       this.scene.add(this.house2Light);
 
